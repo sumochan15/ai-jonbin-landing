@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Jonbin Guild</title>
+    <style>
+      :root {
+        --bg-gradient: radial-gradient(circle at top left, #1b2a4d 0%, #0f0f1f 40%, #050510 100%);
+        --accent: #2fffd7;
+        --accent-dark: #1bb89b;
+        --text-primary: #f5f7ff;
+        --text-muted: #b3c1d6;
+        --surface: rgba(20, 24, 46, 0.6);
+        --surface-soft: rgba(18, 22, 42, 0.55);
+        --border: rgba(255, 255, 255, 0.08);
+        font-family: "Inter", "Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg-gradient);
+        color: var(--text-primary);
+        line-height: 1.7;
+        position: relative;
+        overflow-x: hidden;
+      }
+      .noise {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.05"/></svg>');
+        mix-blend-mode: screen;
+        z-index: -1;
+      }
+      header {
+        position: relative;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 96px 24px 72px;
+        display: grid;
+        gap: 32px;
+      }
+      header::after {
+        content: "";
+        position: absolute;
+        top: -120px;
+        right: -140px;
+        width: 420px;
+        height: 420px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(47,255,215,0.25) 0%, rgba(47,255,215,0) 70%);
+        filter: blur(10px);
+        opacity: .8;
+        z-index: -1;
+      }
+      .hero-art {
+        position: absolute;
+        top: -40px;
+        right: 40px;
+        width: min(32vw, 300px);
+        pointer-events: none;
+        opacity: .9;
+      }
+      .badge-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .badge {
+        padding: 6px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        backdrop-filter: blur(16px);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        letter-spacing: 0.02em;
+      }
+      h1 {
+        margin: 0;
+        font-size: clamp(2.6rem, 5vw, 3.6rem);
+        line-height: 1.15;
+        text-shadow: 0 0 24px rgba(47,255,215,0.28);
+      }
+      .subheading {
+        max-width: 720px;
+        font-size: 1.1rem;
+        color: var(--text-muted);
+      }
+      .cta-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: center;
+      }
+      .cta-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 14px 28px;
+        border-radius: 999px;
+        background: var(--accent);
+        color: #011117;
+        font-weight: 600;
+        text-decoration: none;
+        box-shadow: 0 12px 36px rgba(47,255,215,0.35);
+        transition: transform .18s ease, box-shadow .18s ease;
+      }
+      .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 20px 48px rgba(47,255,215,0.45);
+      }
+      .cta-caption { font-size: 0.9rem; color: var(--text-muted); }
+      section {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 64px 24px;
+      }
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 36px;
+        backdrop-filter: blur(18px);
+        box-shadow: 0 24px 60px rgba(5, 8, 22, 0.45);
+      }
+      .learning {
+        display: grid;
+        gap: 32px;
+      }
+      .learning-head {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .learning-visual {
+        width: min(320px, 48vw);
+        flex-shrink: 0;
+        filter: drop-shadow(0 24px 40px rgba(22, 188, 255, 0.18));
+      }
+      .learning-list {
+        display: grid;
+        gap: 18px;
+        grid-template-columns: repeat(auto-fit, minmax(256px, 1fr));
+      }
+      .learning-list ul {
+        margin: 0;
+        padding-left: 20px;
+        color: var(--text-muted);
+        display: grid;
+        gap: 6px;
+      }
+      .features {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+      .feature-card {
+        background: var(--surface-soft);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 28px;
+        display: grid;
+        gap: 16px;
+      }
+      .feature-top {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+      }
+      .feature-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+        background: rgba(47,255,215,0.12);
+        border: 1px solid rgba(47,255,215,0.24);
+        display: grid;
+        place-items: center;
+      }
+      .flow {
+        display: grid;
+        gap: 24px;
+      }
+      .steps {
+        display: grid;
+        gap: 18px;
+        counter-reset: step;
+      }
+      .step {
+        position: relative;
+        padding: 24px 24px 24px 56px;
+        border-radius: 18px;
+        background: rgba(16,22,42,0.7);
+        border: 1px solid var(--border);
+      }
+      .step::before {
+        counter-increment: step;
+        content: counter(step);
+        position: absolute;
+        left: 18px;
+        top: 24px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: rgba(47,255,215,0.15);
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+      .pricing {
+        position: relative;
+        display: grid;
+        gap: 24px;
+        align-items: center;
+        overflow: hidden;
+      }
+      .pricing::after {
+        content: "";
+        position: absolute;
+        right: -60px;
+        bottom: -80px;
+        width: 220px;
+        height: 220px;
+        background: radial-gradient(circle, rgba(47,255,215,0.25) 0%, rgba(47,255,215,0) 70%);
+        filter: blur(4px);
+      }
+      .price-tag {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 12px;
+        margin: 0;
+      }
+      .capacity { color: var(--accent); font-weight: 600; }
+      .note { font-size: 0.9rem; color: var(--text-muted); }
+      .price-regular {
+        font-size: clamp(1.2rem, 2vw, 1.5rem);
+        color: rgba(255,255,255,0.45);
+        text-decoration: line-through;
+      }
+      .price-current {
+        font-size: clamp(2.6rem, 4vw, 3.1rem);
+        font-weight: 700;
+        color: var(--accent);
+      }
+
+      .faq { display: grid; gap: 16px; }
+      .faq-item {
+        background: rgba(11,15,32,0.6);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 20px 24px;
+      }
+      footer {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 48px 24px 80px;
+        display: grid;
+        gap: 12px;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+      footer a { color: var(--text-muted); text-decoration: none; }
+      footer a:hover { text-decoration: underline; }
+      .free-links { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.85rem; }
+      .free-links a { color: var(--accent); }
+      @media (max-width: 800px) {
+        header::after { width: 300px; height: 300px; top: -100px; right: -80px; }
+        .hero-art { top: -20px; right: 20px; width: min(40vw, 240px); }
+      }
+      @media (max-width: 640px) {
+        header { padding-top: 80px; }
+        .card { padding: 28px; }
+        .learning-head { flex-direction: column; align-items: flex-start; }
+        .learning-visual { width: min(80vw, 300px); }
+        .step { padding-left: 52px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <header>
+      <svg class="hero-art" viewBox="0 0 360 320" aria-hidden="true">
+        <defs>
+          <linearGradient id="heroArc" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="rgba(47,255,215,0.55)" />
+            <stop offset="100%" stop-color="rgba(86,160,255,0.15)" />
+          </linearGradient>
+        </defs>
+        <circle cx="180" cy="140" r="130" fill="rgba(47,255,215,0.12)" />
+        <path d="M80 220 C120 120 250 100 300 200" stroke="url(#heroArc)" stroke-width="8" stroke-linecap="round" fill="none" />
+        <circle cx="120" cy="200" r="16" fill="rgba(47,255,215,0.45)" />
+        <circle cx="260" cy="150" r="12" fill="rgba(86,160,255,0.35)" />
+        <circle cx="210" cy="90" r="20" fill="rgba(47,255,215,0.2)" />
+      </svg>
+      <div class="badge-row">
+        <span class="badge">定員20名</span>
+        <span class="badge">月額980円</span>
+        <span class="badge">AI Jonbin メソッド</span>
+      </div>
+      <h1>AI Jonbin Guild</h1>
+      <p class="subheading">
+        月2回のオンライン勉強会、メンバー共有のn8nサーバー、Discordコミュニティで
+        「必要な時にオンデマンドで呼び出せる業務知能ナビ」を体現する少人数ギルドです。
+      </p>
+      <div class="cta-group">
+        <a class="cta-button" href="https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-5CB68246EK092934WNEBXMBI" target="_blank" rel="noopener">
+          PayPalで参加する
+        </a>
+        <span class="cta-caption">※ 今期募集は20名まで。満席後は体制整備次第の再募集となります。</span>
+      </div>
+    </header>
+
+    <section>
+      <div class="card learning">
+        <div class="learning-head">
+          <h2>AI Jonbin Guildで学べること</h2>
+          <svg class="learning-visual" viewBox="0 0 360 280" aria-hidden="true">
+            <defs>
+              <linearGradient id="learnGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="rgba(47,255,215,0.8)" />
+                <stop offset="100%" stop-color="rgba(86,160,255,0.18)" />
+              </linearGradient>
+            </defs>
+            <rect x="40" y="50" width="280" height="180" rx="28" fill="rgba(12,18,38,0.9)" stroke="rgba(47,255,215,0.25)" />
+            <rect x="70" y="80" width="92" height="26" rx="13" fill="url(#learnGrad)" opacity="0.55" />
+            <rect x="70" y="118" width="220" height="14" rx="7" fill="rgba(47,255,215,0.28)" />
+            <rect x="70" y="144" width="180" height="14" rx="7" fill="rgba(86,160,255,0.28)" />
+            <circle cx="250" cy="210" r="52" fill="rgba(47,255,215,0.22)" />
+            <path d="M250 172 L268 196 L232 196 Z" fill="rgba(47,255,215,0.45)" />
+            <circle cx="130" cy="210" r="18" fill="rgba(86,160,255,0.3)" />
+          </svg>
+        </div>
+        <div class="learning-list">
+          <ul>
+            <li>月2回のオンライン勉強会で最新AIニュースやアップデートをキャッチアップ</li>
+            <li>話題のAIツール（ChatGPT, Gemini など）の基本操作と応用事例</li>
+            <li>Stable Diffusion, Flux, Midjourney などによる画像生成ワークフロー</li>
+            <li>Sora, Veo, Kling など次世代動画生成ツールの使い方と活用アイデア</li>
+          </ul>
+          <ul>
+            <li>n8nやDifyを使ったノーコード自動化のハンズオン実践</li>
+            <li>GPTs / Gem の自作や、効果的なプロンプト設計のベストプラクティス</li>
+            <li>Copilotを活用した資料作成、PowerPoint自動化、議事録文字起こしなど業務活用術</li>
+            <li>コミュニティ内で共有されるテンプレートと自動化レシピのストック</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2>続けるための環境が、ここにある</h2>
+        <p class="description">ネタ切れ・設定の孤独・継続の難しさ。AIと自動化に挑戦する時に直面する壁を、仲間とノーコードツールで乗り越える場を用意しました。初心者でも、実践者でも。</p>
+        <div class="features">
+          <div class="feature-card">
+            <div class="feature-top">
+              <div class="feature-icon">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                  <circle cx="16" cy="16" r="14" stroke="rgba(47,255,215,0.6)" stroke-width="2" />
+                  <path d="M9 19 L13.5 14.5 L17 17.5 L23 11" stroke="rgba(47,255,215,0.8)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <circle cx="23" cy="11" r="2.3" fill="rgba(47,255,215,0.35)" />
+                </svg>
+              </div>
+              <h3>月2回のライブ勉強会</h3>
+            </div>
+            <p>最新トピックと実践ワークをライブ配信。アーカイブ視聴で復習も可能です。</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-top">
+              <div class="feature-icon">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                  <rect x="7" y="8" width="18" height="16" rx="4" stroke="rgba(47,255,215,0.6)" stroke-width="2" />
+                  <path d="M10 12 H22" stroke="rgba(47,255,215,0.6)" stroke-width="2" stroke-linecap="round" />
+                  <path d="M10 16 H22" stroke="rgba(86,160,255,0.6)" stroke-width="2" stroke-linecap="round" />
+                  <circle cx="15" cy="20" r="2" fill="rgba(47,255,215,0.45)" />
+                </svg>
+              </div>
+              <h3>n8n共同サーバー</h3>
+            </div>
+            <p>自動化シナリオをすぐ試せる環境。テンプレート共有とメンバーサポート付きです。</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-top">
+              <div class="feature-icon">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                  <path d="M9 12 C9 9.8 10.8 8 13 8 H19 C21.2 8 23 9.8 23 12 V13.5" stroke="rgba(47,255,215,0.6)" stroke-width="2" stroke-linecap="round" />
+                  <rect x="7" y="13.5" width="18" height="10" rx="4" stroke="rgba(86,160,255,0.6)" stroke-width="2" />
+                  <path d="M11 18 H21" stroke="rgba(47,255,215,0.6)" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </div>
+              <h3>専用Discord</h3>
+            </div>
+            <p>成果報告、質問、コラボ募集まで。クローズド空間だからこそ濃い交流が生まれます。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section>
+      <div class="card">
+        <h2>AI Jonbinとは？</h2>
+        <p class="description">Jonbinは <strong>Just-in-time</strong>、<strong>On-demand</strong>、<strong>Next-gen</strong>、<strong>Business Intelligence</strong>、<strong>Navigator</strong> の頭文字から生まれた造語です。「必要な時にオンデマンドで呼び出せる、次世代の業務知能ナビ」という意味とともに、「Job in」= AIで新しい仕事を創出するというメッセージを込めています。</p>
+        <p class="description">Guildは、そのJonbinの理念でつながる実践者コミュニティを表し、メンバー一人ひとりがナビゲーターであり探求者であることを示しています。</p>
+        <div class="keyword-card">
+          <strong>JONBIN Key Words</strong>
+          <ul>
+            <li>Just-in-time：必要な瞬間に学べる</li>
+            <li>On-demand：自動化レシピをすぐ共有</li>
+            <li>Next-gen：次世代の働き方を実装</li>
+            <li>Business Intelligence：意思決定にAIを</li>
+            <li>Navigator：共に道を切り拓く仲間</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card flow">
+        <h2>参加後の流れ</h2>
+        <div class="steps">
+          <div class="step">
+            <strong>PayPalで申し込み</strong>
+            <p>決済完了メールにDiscord招待リンクと初回案内が届きます。</p>
+          </div>
+          <div class="step">
+            <strong>Discordで最新情報を確認</strong>
+            <p>専用チャンネルで勉強会の日程、n8nサーバー利用ルール、資料を共有します。</p>
+          </div>
+          <div class="step">
+            <strong>ライブ参加＆共同実践</strong>
+            <p>隔週のライブで学び、Discordで成果共有。自動化レシピを交換しながら進めます。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card pricing">
+        <div>
+          <h2>メンバーシップ</h2>
+          <p class="price-tag"><span class="price-regular">月額 2,980円</span><span class="price-current"> 初期メンバー特別価格 980円</span></p>
+          <p class="capacity">今期募集枠：20名</p>
+          <p class="note">初期メンバーとして参加した方は在籍中ずっと980円です</p>
+          <p class="note">21名以降は体制整備後の追加募集・ウェイティングリストでのご案内となります。</p>
+          <p class="description">いつでも退会可能。アーカイブ視聴と資料ダウンロードはメンバー限定です。</p>
+        </div>
+        <div>
+          <a class="cta-button" href="https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-5CB68246EK092934WNEBXMBI" target="_blank" rel="noopener">今すぐ参加する</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2>よくある質問</h2>
+        <div class="faq">
+          <div class="faq-item">
+            <strong>勉強会のアーカイブは視聴できますか？</strong>
+            <p>はい。メンバー専用フォルダに翌日までにアップロードします。</p>
+          </div>
+          <div class="faq-item">
+            <strong>初心者でも参加できますか？</strong>
+            <p>ノーコード／ローコードを前提にした進行です。Discord内で個別質問も受け付けます。</p>
+          </div>
+          <div class="faq-item">
+            <strong>退会したい場合はどうすれば良いですか？</strong>
+            <p>PayPalのサブスクリプション管理画面からいつでもキャンセルできます。日割り返金はありません。</p>
+          </div>
+          <div class="faq-item">
+            <strong>法人・チームでの参加は可能ですか？</strong>
+            <p>1契約につき1アカウントを原則としています。チーム利用を検討される場合は別途ご相談ください。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>お問い合わせ: ymorimot@aijaponia.com</span>
+      <div class="free-links">
+        <span>無料リソース:</span>
+        <a href="https://www.youtube.com/@AI0316" target="_blank" rel="noopener">AI情報YouTubeチャンネル</a>
+        <a href="https://join.slack.com/t/ai-ch-hq/shared_invite/zt-334yfazpd-2NdpPum3XKgFkd0vpt2MrA" target="_blank" rel="noopener">Slackコミュニティ</a>
+      </div>
+      <div>
+        <a href="#">利用規約</a> ・ <a href="#">プライバシーポリシー</a>
+      </div>
+      <span>© 2025 AI Jonbin Guild</span>
+    </footer>
+  </body>
+</html>
