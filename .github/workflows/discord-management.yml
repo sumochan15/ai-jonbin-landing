@@ -1,0 +1,39 @@
+name: Discord Management
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: 実行するコマンド
+        required: true
+        default: post-messages
+        type: choice
+        options:
+          - post-messages
+          - setup-from-json
+          - list-channels
+      guild_id:
+        description: 対象サーバーのID
+        required: true
+        default: "1433485353532260364"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install requirements
+        run: pip install requests
+
+      - name: Run discord_manage.py
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        run: |
+          python documents/ai-community-launch/discord_manage.py ${{ github.event.inputs.operation }} ${{ github.event.inputs.guild_id }}

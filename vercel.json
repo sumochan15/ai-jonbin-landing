@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "documents/ai-community-launch/web-copy/index.html", "use": "@vercel/static" },
+    { "src": "documents/ai-community-launch/web-copy/assets/**/*", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/", "dest": "documents/ai-community-launch/web-copy/index.html" },
+    { "src": "/(.*)", "dest": "documents/ai-community-launch/web-copy/$1" }
+  ]
+}

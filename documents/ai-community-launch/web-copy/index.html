@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="apple-touch-icon" href="assets/favicon.svg" />
     <title>AI Jonbin Guild</title>
     <style>
       :root {
@@ -270,7 +272,18 @@
       footer a { color: var(--text-muted); text-decoration: none; }
       footer a:hover { text-decoration: underline; }
       .free-links { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.85rem; }
-      .free-links a { color: var(--accent); }
+      .free-links a {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--accent);
+        text-decoration: none;
+      }
+      .link-icon {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+      }
       @media (max-width: 800px) {
         header::after { width: 300px; height: 300px; top: -100px; right: -80px; }
         .hero-art { top: -20px; right: 20px; width: min(40vw, 240px); }
@@ -487,8 +500,14 @@
       <span>お問い合わせ: ymorimot@aijaponia.com</span>
       <div class="free-links">
         <span>無料リソース:</span>
-        <a href="https://www.youtube.com/@AI0316" target="_blank" rel="noopener">AI情報YouTubeチャンネル</a>
-        <a href="https://join.slack.com/t/ai-ch-hq/shared_invite/zt-334yfazpd-2NdpPum3XKgFkd0vpt2MrA" target="_blank" rel="noopener">Slackコミュニティ</a>
+        <a href="https://www.youtube.com/@AI0316" target="_blank" rel="noopener">
+          <img src="assets/icon-youtube.svg" alt="" class="link-icon" aria-hidden="true" />
+          <span>AI情報YouTubeチャンネル</span>
+        </a>
+        <a href="https://join.slack.com/t/ai-ch-hq/shared_invite/zt-334yfazpd-2NdpPum3XKgFkd0vpt2MrA" target="_blank" rel="noopener">
+          <img src="assets/icon-slack.svg" alt="" class="link-icon" aria-hidden="true" />
+          <span>Slackコミュニティ</span>
+        </a>
       </div>
       <div>
         <a href="#">利用規約</a> ・ <a href="#">プライバシーポリシー</a>
