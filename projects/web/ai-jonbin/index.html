@@ -3,23 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AI Jonbin - 公式ウェブサイト">
-    <title>AI Jonbin</title>
+    <meta name="description" content="AI Jonbin - AIエージェント開発、AI研修、コンサルティングで企業のDX推進をサポート。上場企業から大学まで幅広い実績。岐阜県本巣市">
+    <meta name="keywords" content="AI, 人工知能, AIエージェント, AI研修, コンサルティング, DX, 岐阜">
+    <meta name="author" content="AI Jonbin">
+    <meta property="og:title" content="AI Jonbin - AIで未来を共創する">
+    <meta property="og:description" content="AIエージェント開発、AI研修、コンサルティングで企業のDX推進をサポート">
+    <meta property="og:type" content="website">
+    <title>AI Jonbin - AIで未来を共創する</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+    <!-- ローディングスクリーン -->
+    <div id="loader" class="loader">
+        <div class="loader-content">
+            <div class="loader-logo">AI Jonbin</div>
+            <div class="loader-bar"><span></span></div>
+        </div>
+    </div>
+
     <!-- ヘッダー -->
-    <header>
+    <header id="header">
         <nav class="navbar">
             <div class="container">
-                <div class="logo">
-                    <h1>AI Jonbin</h1>
-                </div>
+                <a href="#" class="logo">
+                    <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="20" cy="12" r="4" fill="currentColor"/>
+                        <circle cx="12" cy="26" r="3" fill="currentColor"/>
+                        <circle cx="28" cy="26" r="3" fill="currentColor"/>
+                        <line x1="20" y1="16" x2="14" y2="24" stroke="currentColor" stroke-width="1.5"/>
+                        <line x1="20" y1="16" x2="26" y2="24" stroke="currentColor" stroke-width="1.5"/>
+                        <line x1="15" y1="26" x2="25" y2="26" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    <span class="logo-text">AI Jonbin</span>
+                </a>
+
+                <button class="nav-toggle" aria-label="メニューを開く" aria-expanded="false">
+                    <span class="hamburger"></span>
+                </button>
+
                 <ul class="nav-menu">
-                    <li><a href="#home">ホーム</a></li>
-                    <li><a href="#about">会社概要</a></li>
-                    <li><a href="#services">サービス</a></li>
-                    <li><a href="#contact">お問い合わせ</a></li>
+                    <li><a href="#home" class="nav-link">ホーム</a></li>
+                    <li><a href="#about" class="nav-link">私たちについて</a></li>
+                    <li><a href="#services" class="nav-link">サービス</a></li>
+                    <li><a href="#achievements" class="nav-link">実績</a></li>
+                    <li><a href="#contact" class="nav-link nav-cta">お問い合わせ</a></li>
                 </ul>
             </div>
         </nav>
@@ -29,38 +63,404 @@
     <main>
         <!-- ヒーローセクション -->
         <section id="home" class="hero">
-            <div class="container">
-                <h2>AI Jonbinへようこそ</h2>
-                <p>私たちは最先端のAI技術でビジネスをサポートします</p>
-                <a href="#contact" class="btn-primary">お問い合わせ</a>
+            <canvas id="hero-canvas"></canvas>
+            <div class="hero-overlay"></div>
+            <div class="container hero-content">
+                <div class="hero-badge" data-animate="fade-up">
+                    <span class="badge-dot"></span>
+                    岐阜から、AIの未来を
+                </div>
+                <h1 class="hero-title" data-animate="fade-up" data-delay="100">
+                    <span class="title-line">AIで、</span>
+                    <span class="title-line title-gradient">ビジネスを次のステージへ</span>
+                </h1>
+                <p class="hero-description" data-animate="fade-up" data-delay="200">
+                    AIエージェント開発から研修、コンサルティングまで。<br class="sp-hide">
+                    私たちは、企業のAI活用を包括的にサポートします。
+                </p>
+                <div class="hero-cta" data-animate="fade-up" data-delay="300">
+                    <a href="#contact" class="btn btn-primary">
+                        <span>無料相談を予約</span>
+                        <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <a href="#services" class="btn btn-secondary">
+                        <span>サービスを見る</span>
+                    </a>
+                </div>
+                <div class="hero-stats" data-animate="fade-up" data-delay="400">
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="50">0</span><span class="stat-suffix">+</span>
+                        <span class="stat-label">導入実績</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="98">0</span><span class="stat-suffix">%</span>
+                        <span class="stat-label">顧客満足度</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="5">0</span><span class="stat-suffix">年</span>
+                        <span class="stat-label">AI専門実績</span>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <span class="scroll-text">Scroll</span>
+                <div class="scroll-line"></div>
             </div>
         </section>
 
-        <!-- 会社概要セクション -->
+        <!-- Aboutセクション -->
         <section id="about" class="about">
             <div class="container">
-                <h2>会社概要</h2>
-                <p>AI Jonbinは、人工知能技術を活用したソリューションを提供する企業です。</p>
+                <div class="section-header" data-animate="fade-up">
+                    <span class="section-label">About Us</span>
+                    <h2 class="section-title">私たちについて</h2>
+                </div>
+
+                <div class="about-content">
+                    <div class="about-text" data-animate="fade-right">
+                        <h3 class="about-headline">
+                            テクノロジーの力で、<br>
+                            地域から世界を変える
+                        </h3>
+                        <p class="about-description">
+                            AI Jonbinは、岐阜県本巣市を拠点に、AIの力で企業と社会の課題解決に取り組んでいます。
+                        </p>
+                        <p class="about-description">
+                            代表の森本洋平は、最先端のAI技術と、それを実際のビジネスに活かす実践的なノウハウを組み合わせ、上場企業から中小企業、大学機関まで、幅広いクライアントのAI活用を支援してきました。
+                        </p>
+                        <p class="about-description">
+                            私たちのミッションは、AIを「難しいもの」から「誰もが使えるツール」へと変えること。技術の民主化を通じて、すべての企業がAIの恩恵を受けられる未来を創造します。
+                        </p>
+                        <div class="about-signature">
+                            <span class="signature-title">代表</span>
+                            <span class="signature-name">森本 洋平</span>
+                        </div>
+                    </div>
+                    <div class="about-visual" data-animate="fade-left">
+                        <div class="visual-card">
+                            <div class="visual-bg"></div>
+                            <div class="visual-content">
+                                <div class="visual-icon">
+                                    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="40" cy="40" r="38" stroke="url(#gradient1)" stroke-width="2"/>
+                                        <circle cx="40" cy="25" r="8" fill="url(#gradient1)"/>
+                                        <circle cx="22" cy="52" r="6" fill="url(#gradient1)"/>
+                                        <circle cx="58" cy="52" r="6" fill="url(#gradient1)"/>
+                                        <circle cx="40" cy="55" r="5" fill="url(#gradient1)"/>
+                                        <line x1="40" y1="33" x2="27" y2="48" stroke="url(#gradient1)" stroke-width="2"/>
+                                        <line x1="40" y1="33" x2="53" y2="48" stroke="url(#gradient1)" stroke-width="2"/>
+                                        <line x1="40" y1="33" x2="40" y2="50" stroke="url(#gradient1)" stroke-width="2"/>
+                                        <line x1="28" y1="52" x2="35" y2="55" stroke="url(#gradient1)" stroke-width="2"/>
+                                        <line x1="52" y1="52" x2="45" y2="55" stroke="url(#gradient1)" stroke-width="2"/>
+                                        <defs>
+                                            <linearGradient id="gradient1" x1="0" y1="0" x2="80" y2="80">
+                                                <stop offset="0%" stop-color="#0ea5e9"/>
+                                                <stop offset="100%" stop-color="#6366f1"/>
+                                            </linearGradient>
+                                        </defs>
+                                    </svg>
+                                </div>
+                                <div class="visual-stats">
+                                    <div class="v-stat">
+                                        <span class="v-stat-icon">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                                            </svg>
+                                        </span>
+                                        <span class="v-stat-text">AIエージェント開発</span>
+                                    </div>
+                                    <div class="v-stat">
+                                        <span class="v-stat-icon">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                                <circle cx="9" cy="7" r="4"/>
+                                                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                                            </svg>
+                                        </span>
+                                        <span class="v-stat-text">AI研修プログラム</span>
+                                    </div>
+                                    <div class="v-stat">
+                                        <span class="v-stat-icon">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <circle cx="12" cy="12" r="10"/>
+                                                <path d="M12 16v-4M12 8h.01"/>
+                                            </svg>
+                                        </span>
+                                        <span class="v-stat-text">AIコンサルティング</span>
+                                    </div>
+                                    <div class="v-stat">
+                                        <span class="v-stat-icon">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                            </svg>
+                                        </span>
+                                        <span class="v-stat-text">AIコミュニティ運営</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- サービスセクション -->
         <section id="services" class="services">
+            <div class="services-bg"></div>
             <div class="container">
-                <h2>サービス</h2>
-                <div class="service-grid">
-                    <div class="service-card">
-                        <h3>AIコンサルティング</h3>
-                        <p>貴社のビジネスに最適なAIソリューションをご提案します</p>
+                <div class="section-header" data-animate="fade-up">
+                    <span class="section-label">Services</span>
+                    <h2 class="section-title">サービス</h2>
+                    <p class="section-description">
+                        お客様のニーズに合わせた、包括的なAIソリューションを提供します
+                    </p>
+                </div>
+
+                <div class="services-grid">
+                    <article class="service-card" data-animate="fade-up" data-delay="0">
+                        <div class="service-icon">
+                            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="4" y="8" width="40" height="28" rx="4" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="24" cy="22" r="6" stroke="currentColor" stroke-width="2"/>
+                                <path d="M18 22h-6M36 22h-6M24 16v-4M24 32v-4" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="22" r="2" fill="currentColor"/>
+                                <circle cx="36" cy="22" r="2" fill="currentColor"/>
+                                <circle cx="24" cy="12" r="2" fill="currentColor"/>
+                                <circle cx="24" cy="32" r="2" fill="currentColor"/>
+                                <path d="M16 40h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <h3 class="service-title">AIエージェント開発</h3>
+                        <p class="service-description">
+                            業務を自動化し、生産性を飛躍的に向上させるAIエージェントを開発。お客様の業務フローに最適化されたカスタムソリューションを提供します。
+                        </p>
+                        <ul class="service-features">
+                            <li>カスタムAIチャットボット</li>
+                            <li>業務自動化エージェント</li>
+                            <li>データ分析・レポート自動生成</li>
+                        </ul>
+                        <a href="#contact" class="service-link">
+                            詳しく見る
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </article>
+
+                    <article class="service-card featured" data-animate="fade-up" data-delay="100">
+                        <div class="service-badge">人気</div>
+                        <div class="service-icon">
+                            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M24 4L4 14v20l20 10 20-10V14L24 4z" stroke="currentColor" stroke-width="2"/>
+                                <path d="M4 14l20 10 20-10M24 44V24" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="24" cy="24" r="4" fill="currentColor"/>
+                                <circle cx="12" cy="18" r="2" fill="currentColor"/>
+                                <circle cx="36" cy="18" r="2" fill="currentColor"/>
+                                <circle cx="12" cy="30" r="2" fill="currentColor"/>
+                                <circle cx="36" cy="30" r="2" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h3 class="service-title">AI研修</h3>
+                        <p class="service-description">
+                            経営層から現場スタッフまで、組織全体のAIリテラシーを向上。実践的なワークショップで、すぐに活かせるスキルを習得できます。
+                        </p>
+                        <ul class="service-features">
+                            <li>経営者向けAI戦略研修</li>
+                            <li>実務者向けAI活用ワークショップ</li>
+                            <li>プロンプトエンジニアリング講座</li>
+                        </ul>
+                        <a href="#contact" class="service-link">
+                            詳しく見る
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </article>
+
+                    <article class="service-card" data-animate="fade-up" data-delay="200">
+                        <div class="service-icon">
+                            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2"/>
+                                <path d="M24 14v10l7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M14 8l-4-4M34 8l4-4M8 34l-4 4M40 34l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="24" cy="24" r="3" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h3 class="service-title">AIコンサルティング</h3>
+                        <p class="service-description">
+                            AI導入の戦略立案から実装支援まで、一気通貫でサポート。投資対効果を最大化する、実現可能なロードマップを策定します。
+                        </p>
+                        <ul class="service-features">
+                            <li>AI導入戦略立案</li>
+                            <li>業務プロセス分析</li>
+                            <li>ROI最大化支援</li>
+                        </ul>
+                        <a href="#contact" class="service-link">
+                            詳しく見る
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </article>
+
+                    <article class="service-card" data-animate="fade-up" data-delay="300">
+                        <div class="service-icon">
+                            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="24" cy="16" r="8" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="10" cy="34" r="6" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="38" cy="34" r="6" stroke="currentColor" stroke-width="2"/>
+                                <path d="M18 22l-5 8M30 22l5 8M16 34h16" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="24" cy="16" r="3" fill="currentColor"/>
+                                <circle cx="10" cy="34" r="2" fill="currentColor"/>
+                                <circle cx="38" cy="34" r="2" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h3 class="service-title">AIコミュニティ運営</h3>
+                        <p class="service-description">
+                            AI活用に関心のある企業・個人が集うコミュニティを運営。最新情報の共有、ネットワーキング、共同プロジェクトの機会を提供します。
+                        </p>
+                        <ul class="service-features">
+                            <li>オンラインコミュニティ</li>
+                            <li>定期イベント・勉強会</li>
+                            <li>ビジネスマッチング</li>
+                        </ul>
+                        <a href="#contact" class="service-link">
+                            詳しく見る
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- 実績セクション -->
+        <section id="achievements" class="achievements">
+            <div class="container">
+                <div class="section-header" data-animate="fade-up">
+                    <span class="section-label">Achievements</span>
+                    <h2 class="section-title">実績</h2>
+                    <p class="section-description">
+                        上場企業から大学機関まで、幅広いクライアントにサービスを提供しています
+                    </p>
+                </div>
+
+                <div class="achievements-showcase">
+                    <div class="achievement-category" data-animate="fade-up" data-delay="0">
+                        <div class="category-icon">
+                            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="6" y="10" width="36" height="28" rx="2"/>
+                                <path d="M6 18h36"/>
+                                <path d="M14 26h8M14 32h12"/>
+                            </svg>
+                        </div>
+                        <h3 class="category-title">上場企業</h3>
+                        <p class="category-description">
+                            東証プライム・スタンダード上場企業への<br>AI導入・研修実績
+                        </p>
+                        <div class="category-stats">
+                            <span class="cat-stat-number">10+</span>
+                            <span class="cat-stat-label">社</span>
+                        </div>
                     </div>
-                    <div class="service-card">
-                        <h3>システム開発</h3>
-                        <p>最新のAI技術を活用したシステム開発を行います</p>
+
+                    <div class="achievement-category" data-animate="fade-up" data-delay="100">
+                        <div class="category-icon">
+                            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M24 4L4 16v16l20 12 20-12V16L24 4z"/>
+                                <circle cx="24" cy="22" r="6"/>
+                                <path d="M24 28v8"/>
+                            </svg>
+                        </div>
+                        <h3 class="category-title">大学・研究機関</h3>
+                        <p class="category-description">
+                            国公立・私立大学への<br>AI教育プログラム提供
+                        </p>
+                        <div class="category-stats">
+                            <span class="cat-stat-number">5+</span>
+                            <span class="cat-stat-label">校</span>
+                        </div>
                     </div>
-                    <div class="service-card">
-                        <h3>教育・トレーニング</h3>
-                        <p>AI技術の活用方法を学べる研修プログラムを提供します</p>
+
+                    <div class="achievement-category" data-animate="fade-up" data-delay="200">
+                        <div class="category-icon">
+                            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="8" y="12" width="32" height="24" rx="2"/>
+                                <path d="M8 20h32"/>
+                                <circle cx="24" cy="30" r="4"/>
+                            </svg>
+                        </div>
+                        <h3 class="category-title">中小企業</h3>
+                        <p class="category-description">
+                            地域の中小企業への<br>AI活用コンサルティング
+                        </p>
+                        <div class="category-stats">
+                            <span class="cat-stat-number">30+</span>
+                            <span class="cat-stat-label">社</span>
+                        </div>
                     </div>
+
+                    <div class="achievement-category" data-animate="fade-up" data-delay="300">
+                        <div class="category-icon">
+                            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="24" cy="16" r="8"/>
+                                <path d="M8 40c0-8.837 7.163-16 16-16s16 7.163 16 16"/>
+                            </svg>
+                        </div>
+                        <h3 class="category-title">個人</h3>
+                        <p class="category-description">
+                            個人事業主・フリーランスへの<br>AI活用支援
+                        </p>
+                        <div class="category-stats">
+                            <span class="cat-stat-number">100+</span>
+                            <span class="cat-stat-label">名</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trust-banner" data-animate="fade-up">
+                    <div class="trust-content">
+                        <div class="trust-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                <path d="M9 12l2 2 4-4"/>
+                            </svg>
+                        </div>
+                        <div class="trust-text">
+                            <h4>安心のサポート体制</h4>
+                            <p>導入後も専任担当者が継続的にサポート。お客様の成功にコミットします。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTAセクション -->
+        <section class="cta-section">
+            <div class="cta-bg">
+                <div class="cta-particles"></div>
+            </div>
+            <div class="container">
+                <div class="cta-content" data-animate="fade-up">
+                    <h2 class="cta-title">
+                        AIの導入、何から始めればいいか<br class="sp-hide">
+                        分からない方へ
+                    </h2>
+                    <p class="cta-description">
+                        まずは無料相談で、貴社の課題をお聞かせください。<br>
+                        最適なAI活用プランをご提案いたします。
+                    </p>
+                    <a href="#contact" class="btn btn-white btn-large">
+                        <span>無料相談を予約する</span>
+                        <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </section>
@@ -68,22 +468,152 @@
         <!-- お問い合わせセクション -->
         <section id="contact" class="contact">
             <div class="container">
-                <h2>お問い合わせ</h2>
-                <p>サービスに関するお問い合わせは、こちらからお願いいたします。</p>
-                <form class="contact-form">
-                    <input type="text" placeholder="お名前" required>
-                    <input type="email" placeholder="メールアドレス" required>
-                    <textarea placeholder="お問い合わせ内容" rows="5" required></textarea>
-                    <button type="submit" class="btn-primary">送信</button>
-                </form>
+                <div class="contact-wrapper">
+                    <div class="contact-info" data-animate="fade-right">
+                        <div class="section-header">
+                            <span class="section-label">Contact</span>
+                            <h2 class="section-title">お問い合わせ</h2>
+                        </div>
+                        <p class="contact-description">
+                            サービスに関するご質問、お見積もりのご依頼など、<br>
+                            お気軽にお問い合わせください。
+                        </p>
+
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                        <circle cx="12" cy="10" r="3"/>
+                                    </svg>
+                                </div>
+                                <div class="contact-text">
+                                    <span class="contact-label">所在地</span>
+                                    <span class="contact-value">岐阜県本巣市</span>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="4" width="20" height="16" rx="2"/>
+                                        <path d="M22 6l-10 7L2 6"/>
+                                    </svg>
+                                </div>
+                                <div class="contact-text">
+                                    <span class="contact-label">メール</span>
+                                    <span class="contact-value">info@ai-jonbin.com</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="company-info">
+                            <h4 class="company-title">会社情報</h4>
+                            <dl class="company-details">
+                                <div class="company-row">
+                                    <dt>会社名</dt>
+                                    <dd>AI Jonbin</dd>
+                                </div>
+                                <div class="company-row">
+                                    <dt>代表</dt>
+                                    <dd>森本 洋平</dd>
+                                </div>
+                                <div class="company-row">
+                                    <dt>事業内容</dt>
+                                    <dd>AIエージェント開発、AI研修、コンサルティング、AIコミュニティ運営</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-wrapper" data-animate="fade-left">
+                        <form class="contact-form" id="contact-form">
+                            <div class="form-group">
+                                <label for="name" class="form-label">お名前 <span class="required">*</span></label>
+                                <input type="text" id="name" name="name" class="form-input" placeholder="山田 太郎" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="company" class="form-label">会社名</label>
+                                <input type="text" id="company" name="company" class="form-input" placeholder="株式会社サンプル">
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="form-label">メールアドレス <span class="required">*</span></label>
+                                <input type="email" id="email" name="email" class="form-input" placeholder="example@company.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="service" class="form-label">ご興味のあるサービス</label>
+                                <select id="service" name="service" class="form-select">
+                                    <option value="">選択してください</option>
+                                    <option value="agent">AIエージェント開発</option>
+                                    <option value="training">AI研修</option>
+                                    <option value="consulting">AIコンサルティング</option>
+                                    <option value="community">AIコミュニティ</option>
+                                    <option value="other">その他</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="message" class="form-label">お問い合わせ内容 <span class="required">*</span></label>
+                                <textarea id="message" name="message" class="form-textarea" rows="5" placeholder="お問い合わせ内容をご記入ください" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-full">
+                                <span>送信する</span>
+                                <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
     <!-- フッター -->
-    <footer>
+    <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 AI Jonbin. All rights reserved.</p>
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="#" class="footer-logo">
+                        <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="20" cy="12" r="4" fill="currentColor"/>
+                            <circle cx="12" cy="26" r="3" fill="currentColor"/>
+                            <circle cx="28" cy="26" r="3" fill="currentColor"/>
+                            <line x1="20" y1="16" x2="14" y2="24" stroke="currentColor" stroke-width="1.5"/>
+                            <line x1="20" y1="16" x2="26" y2="24" stroke="currentColor" stroke-width="1.5"/>
+                            <line x1="15" y1="26" x2="25" y2="26" stroke="currentColor" stroke-width="1.5"/>
+                        </svg>
+                        <span>AI Jonbin</span>
+                    </a>
+                    <p class="footer-tagline">AIで未来を共創する</p>
+                </div>
+
+                <nav class="footer-nav">
+                    <div class="footer-nav-group">
+                        <h5 class="footer-nav-title">ナビゲーション</h5>
+                        <ul class="footer-nav-list">
+                            <li><a href="#home">ホーム</a></li>
+                            <li><a href="#about">私たちについて</a></li>
+                            <li><a href="#services">サービス</a></li>
+                            <li><a href="#achievements">実績</a></li>
+                            <li><a href="#contact">お問い合わせ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-nav-group">
+                        <h5 class="footer-nav-title">サービス</h5>
+                        <ul class="footer-nav-list">
+                            <li><a href="#services">AIエージェント開発</a></li>
+                            <li><a href="#services">AI研修</a></li>
+                            <li><a href="#services">AIコンサルティング</a></li>
+                            <li><a href="#services">AIコミュニティ</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">&copy; 2025 AI Jonbin. All rights reserved.</p>
+                <p class="footer-location">岐阜県本巣市</p>
+            </div>
         </div>
     </footer>
 
